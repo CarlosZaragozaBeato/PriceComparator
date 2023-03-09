@@ -7,3 +7,4 @@
 
 ## Extras
 * Crear una pagina web para la busqueda de productos
+* Añadir funcionalidad de listar los productos de una marca en concreto
