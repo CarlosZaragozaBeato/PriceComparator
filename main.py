@@ -9,29 +9,27 @@ def TipoProductoMarca():
     pass
 
 
-product = 'Varitas de merluza.'#"Refresco cola Coca-Cola 33cl pack 12 zero zero sin cafeína"
+product = 'Refresco cola Coca-Cola 33cl pack 12 zero zero sin cafeína'#'Varitas de merluza Pescanova 450 g.'
+#""
 
 
 
 driver = webdriver.Chrome()
 
-
-
 search = Search(product,driver)
 
 #Obtenemos la informacion de los supermercados
 Carrefour = search.CarrefourProduct()
-# AHORRA MAS
+AhorraMas = search.AhorraMasProduct()
+
 # DIA
-# ALDI
 # MERCADONA
-# EROSKI
-# CORTE INGLES
 
 
-ListaSupermercados = [Carrefour]
 
+# CSV
 
+ListaSupermercados = [Carrefour, AhorraMas]
 
 title_product = product.replace(" ", "_")
 
@@ -46,30 +44,5 @@ with open(f'salidas/{title_product}.csv', mode='w', newline='') as productos_csv
 
 
 
-
-
-
-
-time.sleep(5)
+time.sleep(15)
 driver.quit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def MostrarMercadona():
-    pass
-
-
-def MostrarAhorraMas():
-    pass
