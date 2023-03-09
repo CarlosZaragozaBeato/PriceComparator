@@ -9,7 +9,7 @@ def TipoProductoMarca():
     pass
 
 
-product = 'asdasodhasdh'
+product = 'Cacao soluble instantáneo Nestlé Nesquik sin gluten 390 g.'
 #'Refresco cola Coca-Cola 33cl pack 12 zero zero sin cafeína'
 #'Varitas de merluza Pescanova 450 g.'
 
@@ -23,15 +23,14 @@ search = Search(product,driver)
 #Obtenemos la informacion de los supermercados
 Carrefour = search.CarrefourProduct()
 AhorraMas = search.AhorraMasProduct()
-
-# DIA
+Dia = search.DiaProduct()
 # MERCADONA
 
 
 
-# CSV
 
-ListaSupermercados = [Carrefour, AhorraMas]
+# CREACIÓN DE CSV
+ListaSupermercados = [Carrefour, AhorraMas,Dia]
 
 title_product = product.replace(" ", "_")
 
@@ -43,8 +42,6 @@ with open(f'salidas/{title_product}.csv', mode='w', newline='') as productos_csv
 
     for Supermercado in ListaSupermercados:
         writer.writerow(Supermercado)
-
-
 
 time.sleep(5)
 driver.quit()

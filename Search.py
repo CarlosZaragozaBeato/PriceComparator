@@ -43,7 +43,6 @@ class Search:
             price = self.driver.find_element(
                 By.XPATH, '//*[@id="ebx-grid"]/article[1]/div/p/strong')
             resultado = price.text[: -1].replace(' ', '')
-            return ('', )
         except:
             resultado = "NO EXISTE EL PRODUCTO"
 
@@ -56,7 +55,7 @@ class Search:
     def AhorraMasProduct(self):
         self.driver.get('https://www.ahorramas.com/')
 
-        time.sleep(1)
+        time.sleep(5)
 
         btn_cookies = self.driver.find_element(
             By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
@@ -82,3 +81,33 @@ class Search:
             resultado = "NO EXISTE EL PRODUCTO"
 
         return ('Ahorra Mas', resultado)
+
+    def DiaProduct(self):
+
+        self.driver.get('https://www.dia.es/compra-online/')
+        
+        time.sleep(2)
+
+        btn_cookies = self.driver.find_element(By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
+        btn_cookies.click()
+
+        resultado = ''
+        search_input = self.driver.find_element(By.XPATH, '//*[@id="search"]')
+        search_input.send_keys(self.product_name)
+
+        search_button = self.driver.find_element(By.CLASS_NAME, 'desktop-search')
+        search_button.click()
+        
+
+
+        try:
+            price = self.driver.find_element(By.XPATH, '//*[@id="productgridcontainer"]/div[1]/div[1]/div/a/div[2]/div/p[1]')
+            resultado = price.text[: -1].replace(' ', '') 
+        except:
+            resultado = 'NO EXISTE EL PRODUCTO'
+        
+        return ('DIA', resultado)
+        
+
+#Obtener productos por categoria 
+
