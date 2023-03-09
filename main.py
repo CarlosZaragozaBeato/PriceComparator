@@ -9,8 +9,10 @@ def TipoProductoMarca():
     pass
 
 
-product = 'Refresco cola Coca-Cola 33cl pack 12 zero zero sin cafeína'#'Varitas de merluza Pescanova 450 g.'
-#""
+product = 'asdasodhasdh'
+#'Refresco cola Coca-Cola 33cl pack 12 zero zero sin cafeína'
+#'Varitas de merluza Pescanova 450 g.'
+
 
 
 
@@ -44,5 +46,5 @@ with open(f'salidas/{title_product}.csv', mode='w', newline='') as productos_csv
 
 
 
-time.sleep(15)
+time.sleep(5)
 driver.quit()
