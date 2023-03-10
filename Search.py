@@ -1,10 +1,14 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
 class Search:
     product_name = ""
+    cookies:bool = False
+
 
     def __init__(self, product_name: str, driver):
         self.product_name = product_name
@@ -16,9 +20,17 @@ class Search:
         self.driver.get(
             'https://www.carrefour.es/?gclid=Cj0KCQiAgaGgBhC8ARIsAAAyLfHJZAkh3PZU6zJ6jhoAhxnOvsCcPahmWyNHF4xUuQiT2F9gBk3rdloaAkgGEALw_wcB&gclsrc=aw.ds')
 
-        btn_cookies = self.driver.find_element(
-            By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
-        btn_cookies.click()
+
+
+
+        if not self.cookies:
+            wait1 = WebDriverWait(self.driver, 20)
+            btn_cookie = wait1.until(EC.presence_of_element_located((By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')))
+            btn_cookie.click()
+
+
+
+
 
         # A la hora de buscar hay dos inputs diferentes el segundo se crea cuando clickamos el primero
         input_text_search_parent = self.driver.find_element(
@@ -45,10 +57,9 @@ class Search:
             resultado = price.text[: -1].replace(' ', '')
         except:
             resultado = "NO EXISTE EL PRODUCTO"
-
         return ('Carrefour', resultado)
 
-
+#Funcion para el xPath
 
 
     # BUSCAR EN AHORRA MAS
@@ -57,12 +68,11 @@ class Search:
 
         time.sleep(5)
 
-        btn_cookies = self.driver.find_element(
-            By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
-        btn_cookies.click()
+        if not self.cookies:
+            btn_cookies = self.driver.find_element(
+                By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
+            btn_cookies.click()
 
-        # Introducimos el producto
-        # Accedo a traves de la clase porque introduciendo el XPATH no tenia acceso a el.
         input_text = self.driver.find_element(By.CLASS_NAME, 'search-field')
         input_text.click()
         input_text.send_keys(self.product_name)
@@ -73,7 +83,6 @@ class Search:
         resultado = ''
 
         try:
-            # Vamos a los productos
             price = self.driver.find_element(
                 By.XPATH, '//*[@id="product-search-results"]/div[2]/div[4]/div[2]/div[1]/div/div/div[3]/div[2]/div[1]/div/span/span')
             resultado = price.text[: -1].replace(' ', '')
@@ -83,31 +92,32 @@ class Search:
         return ('Ahorra Mas', resultado)
 
     def DiaProduct(self):
-
         self.driver.get('https://www.dia.es/compra-online/')
-        
-        time.sleep(2)
 
-        btn_cookies = self.driver.find_element(By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
-        btn_cookies.click()
+        time.sleep(1)
+
+        if not self.cookies:
+            wait1 = WebDriverWait(self.driver, 20)
+            btn_cookie = wait1.until(EC.presence_of_element_located((By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')))
+            btn_cookie.click()
+            self.cookies = True
 
         resultado = ''
         search_input = self.driver.find_element(By.XPATH, '//*[@id="search"]')
         search_input.send_keys(self.product_name)
 
-        search_button = self.driver.find_element(By.CLASS_NAME, 'desktop-search')
+        search_button = self.driver.find_element(
+            By.CLASS_NAME, 'desktop-search')
         search_button.click()
-        
-
 
         try:
-            price = self.driver.find_element(By.XPATH, '//*[@id="productgridcontainer"]/div[1]/div[1]/div/a/div[2]/div/p[1]')
-            resultado = price.text[: -1].replace(' ', '') 
+            price = self.driver.find_element(
+                By.XPATH, '//*[@id="productgridcontainer"]/div[1]/div[1]/div/a/div[2]/div/p[1]')
+            resultado = price.text[: -1].replace(' ', '')
         except:
             resultado = 'NO EXISTE EL PRODUCTO'
-        
+
         return ('DIA', resultado)
-        
 
-#Obtener productos por categoria 
 
+# Obtener productos por categoria
