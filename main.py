@@ -4,44 +4,43 @@ from Search import Search
 import time
 import csv
 
-#Para recopilar informacion de una marca en concreto
-def TipoProductoMarca():
-    pass
+
+def guardarCSV(prd, listaProductos):
+    title_product = prd.replace(" ", "_")
+
+    with open(f'salidas/{title_product}.csv', mode='w', newline='') as productos_csv:
+
+        writer = csv.writer(productos_csv)
+        
+        for Supermercado in listaProductos:
+            writer.writerow(Supermercado)
 
 
-product = 'Cacao soluble instantáneo Nestlé Nesquik sin gluten 390 g.'
-#'Refresco cola Coca-Cola 33cl pack 12 zero zero sin cafeína'
-#'Varitas de merluza Pescanova 450 g.'
 
 
-
+products = ['Cacao soluble instantáneo Nestlé Nesquik sin gluten 390 g.',
+            'Refresco cola Coca-Cola 33cl pack 12 zero zero sin cafeína',
+            'Varitas de merluza Pescanova 450 g.',
+            'ERRRORRERRORRERRRORRROERO']
 
 driver = webdriver.Chrome()
 
-search = Search(product,driver)
+driver.maximize_window()
 
-#Obtenemos la informacion de los supermercados
-Carrefour = search.CarrefourProduct()
-AhorraMas = search.AhorraMasProduct()
-Dia = search.DiaProduct()
-# MERCADONA
-
-
-
-
-# CREACIÓN DE CSV
-ListaSupermercados = [Carrefour, AhorraMas,Dia]
-
-title_product = product.replace(" ", "_")
-
-
-with open(f'salidas/{title_product}.csv', mode='w', newline='') as productos_csv:
-
-    writer = csv.writer(productos_csv)
+for product in products:
     
+    search = Search(product,driver)
+    
+    Carrefour = search.CarrefourProduct()
+    AhorraMas = search.AhorraMasProduct()
+    Dia = search.DiaProduct()
 
-    for Supermercado in ListaSupermercados:
-        writer.writerow(Supermercado)
+    ListaSupermercados = [Carrefour, AhorraMas,Dia]
 
-time.sleep(5)
+    guardarCSV(product, ListaSupermercados)
+
+
+
+
+time.sleep(2)
 driver.quit()
